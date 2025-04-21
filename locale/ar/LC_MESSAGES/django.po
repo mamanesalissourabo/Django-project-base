@@ -1,0 +1,276 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-21 17:19+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+#: .\base\forms.py:12 .\base\forms.py:15
+msgid "Nom d'utilisateur"
+msgstr "اسم المستخدم"
+
+#: .\base\forms.py:19 .\base\forms.py:22
+msgid "Mot de passe"
+msgstr "كلمة المرور"
+
+#: .\base\templates\Authentification\login.html:25
+msgid "Safetyfirst"
+msgstr ""
+
+#: .\base\templates\Authentification\login.html:26
+msgid "Veuillez vous connecter à votre compte et commencer l'aventure"
+msgstr "يرجى تسجيل الدخول إلى حسابك وبدء المغامرة"
+
+#: .\base\templates\Authentification\login.html:51
+msgid "Mot de passe oublié ?"
+msgstr "هل نسيت كلمة المرور؟"
+
+#: .\base\templates\Authentification\login.html:60
+msgid "Se connecter"
+msgstr "تسجيل الدخول"
+
+#: .\base\templates\Authentification\login.html:129
+msgid "Nous Contacter !"
+msgstr ""
+
+#: .\base\templates\layout\header\navbar.html:234
+msgid "Langues"
+msgstr ""
+
+#: .\incident\forms.py:10
+msgid "Presque-Accident"
+msgstr "حادث شبه واقع"
+
+#: .\incident\forms.py:11
+msgid "Observation Sécurité/Environnement"
+msgstr "اختر نوع الحادث (حادث كاد أن يقع أو ملاحظة أمان/بيئة)"
+
+#: .\incident\forms.py:13
+msgid "Type d'incident"
+msgstr "نوع الحادث"
+
+#: .\incident\forms.py:20 .\incident\forms.py:72
+msgid "Quelle en serait la conséquence ?"
+msgstr "ما يمكن أن تكون عواقبه؟"
+
+#: .\incident\forms.py:26 .\incident\forms.py:78
+msgid "Quelle est la solution à votre avis ?"
+msgstr "ما هو الحل في رأيك؟"
+
+# Section OSE
+#: .\incident\forms.py:32
+#: .\incident\templates\incident\incident_create.html:276
+msgid "Action de correction immédiate ?"
+msgstr "إجراء تصحيح فوري؟"
+
+#: .\incident\forms.py:43
+msgid "Photo de la correction"
+msgstr "صورة التصحيح"
+
+#: .\incident\forms.py:49
+msgid "Commentaire sur la correction"
+msgstr "تعليق على التصحيح"
+
+#: .\incident\forms.py:55
+msgid "Blessure potentielle ?"
+msgstr ""
+
+#: .\incident\forms.py:66
+msgid "Cause principale"
+msgstr ""
+
+# Lieu (saisie manuelle)
+#: .\incident\forms.py:84
+msgid "Lieu (saisie manuelle)"
+msgstr "المكان (إدخال يدوي)"
+
+#: .\incident\forms.py:86
+#, fuzzy
+#| msgid "Précisez le lieu exact si nécessaire (bâtiment, étage, zone...)"
+msgid "Précisez l'emplacement exact si nécessaire"
+msgstr "حدد المكان بالضبط إذا لزم الأمر (مبنى، طابق، منطقة...)"
+
+#: .\incident\forms.py:149
+msgid "Intitulé de l'évènement"
+msgstr "عنوان الحدث"
+
+#: .\incident\forms.py:150
+msgid "Site"
+msgstr "الموقع"
+
+#: .\incident\forms.py:151
+msgid "Emplacement"
+msgstr "الجهة"
+
+#: .\incident\forms.py:152
+msgid "Photo de l'évènement"
+msgstr "صورة الحادث"
+
+#: .\incident\forms.py:153
+msgid "Description détaillée"
+msgstr "وصف مفصل"
+
+#: .\incident\forms.py:154
+msgid "Commentaire"
+msgstr "ملاحظات"
+
+# Formulaire d'incident
+#: .\incident\templates\incident\incident_create.html:167
+msgid "Déclaration d'incident"
+msgstr "تقرير الحادث"
+
+#: .\incident\templates\incident\incident_create.html:178
+#: .\incident\templates\incident\incident_create.html:423
+msgid "1. Informations de base"
+msgstr "١. المعلومات الأساسية"
+
+#: .\incident\templates\incident\incident_create.html:187
+msgid "Donnez un titre clair et descriptif à votre incident"
+msgstr "أعط عنوانًا واضحًا ووصفيًا للحادث"
+
+#: .\incident\templates\incident\incident_create.html:193
+msgid ""
+"Sélectionnez le type d'incident (Presque-Accident ou Observation Sécurité/"
+"Environnement)"
+msgstr "اختر نوع الحادث (حادث كاد أن يقع أو ملاحظة أمان/بيئة)"
+
+#: .\incident\templates\incident\incident_create.html:204
+msgid "Décrivez l'incident de manière détaillée (quoi, comment...)"
+msgstr "صف الحادث بتفصيل (ماذا، كيف...)"
+
+#: .\incident\templates\incident\incident_create.html:215
+msgid "2. Questions spécifiques Presque-Accident"
+msgstr "٣. أسئلة محددة عن الحوادث التي كادت تقع"
+
+#: .\incident\templates\incident\incident_create.html:256
+msgid "2. Questions spécifiques Observation Sécurité/Environnement"
+msgstr "اختر نوع الحادث (حادث كاد أن يقع أو ملاحظة أمان/بيئة)"
+
+#: .\incident\templates\incident\incident_create.html:279
+msgid "Oui"
+msgstr "نعم"
+
+#: .\incident\templates\incident\incident_create.html:280
+msgid "Non"
+msgstr "لا"
+
+#: .\incident\templates\incident\incident_create.html:309
+msgid "3. Localisation"
+msgstr "٣. الموقع"
+
+#: .\incident\templates\incident\incident_create.html:325
+msgid "Sélectionnez d'abord un site pour voir les emplacements disponibles"
+msgstr "اختر موقعًا أولاً لرؤية الأماكن المتاحة"
+
+#: .\incident\templates\incident\incident_create.html:336
+msgid "Précisez le lieu exact si nécessaire (bâtiment, étage, zone...)"
+msgstr "حدد المكان بالضبط إذا لزم الأمر (مبنى، طابق، منطقة...)"
+
+#: .\incident\templates\incident\incident_create.html:351
+#: .\incident\templates\incident\incident_create.html:459
+msgid "4. Documentation"
+msgstr "٤. التوثيق"
+
+#: .\incident\templates\incident\incident_create.html:367
+msgid "Glissez-déposez une photo ou cliquez pour sélectionner"
+msgstr "اسحب وأفلت صورة أو انقر للتحديد"
+
+#: .\incident\templates\incident\incident_create.html:375
+msgid "Ajoutez tout commentaire supplémentaire utile"
+msgstr "أضف أي تعليقات إضافية مفيدة"
+
+#: .\incident\templates\incident\incident_create.html:383
+msgid "Annuler"
+msgstr "إلغاء"
+
+#: .\incident\templates\incident\incident_create.html:386
+msgid "Soumettre la déclaration"
+msgstr "إرسال التقرير"
+
+#: .\incident\templates\incident\incident_create.html:399
+msgid "Résumé & Checklist"
+msgstr "ملخص وقائمة المراجعة"
+
+#: .\incident\templates\incident\incident_create.html:401
+msgid "Progression"
+msgstr "التقدم"
+
+#: .\incident\templates\incident\incident_create.html:418
+msgid "Sections à compléter"
+msgstr "الأقسام المطلوب إكمالها"
+
+# Champs requis
+#: .\incident\templates\incident\incident_create.html:427
+#: .\incident\templates\incident\incident_create.html:439
+#: .\incident\templates\incident\incident_create.html:451
+#: .\incident\templates\incident\incident_create.html:463
+msgid "champs requis"
+msgstr "الحقول المطلوبة"
+
+#: .\incident\templates\incident\incident_create.html:435
+msgid "2. Localisation"
+msgstr "٣. الموقع"
+
+# Questions spécifiques
+#: .\incident\templates\incident\incident_create.html:447
+msgid "3. Questions spécifiques"
+msgstr "أسئلة محددة"
+
+#: .\incident\templates\incident\incident_create.html:470
+msgid "Vérification finale"
+msgstr "التحقق النهائي"
+
+#: .\incident\templates\incident\incident_create.html:474
+msgid "Tous les champs requis sont remplis"
+msgstr "جميع الحقول المطلوبة مكتملة"
+
+#: .\incident\templates\incident\incident_create.html:478
+msgid "Les photos sont claires et lisibles"
+msgstr "الصور واضحة ويمكن قراءتها"
+
+#: .\incident\templates\incident\incident_create.html:482
+msgid "La description est complète et précise"
+msgstr "الوصف كامل ودقيق"
+
+#: .\worksafety2\settings.py:129
+msgid "French"
+msgstr "الفرنسية"
+
+#: .\worksafety2\settings.py:130
+msgid "English"
+msgstr "الإنجليزية"
+
+#: .\worksafety2\settings.py:131
+msgid "Arabic"
+msgstr "العربية"
+
+# Type d'évènement
+#~ msgid "Type de l'évènement"
+#~ msgstr "نوع الحدث"
+
+# Questions PA (Presque-Accident)
+#~ msgid "Est-ce que l’incident a manqué de blesser une personne ?"
+#~ msgstr "هل كاد الحادث أن يتسبب في إصابة شخص؟"
+
+#~ msgid "Quelle est la cause principale de l’incident ?"
+#~ msgstr "ما هو السبب الرئيسي للحادث؟"
+
+#~ msgid "Criticité"
+#~ msgstr "درجة الخطورة"
+
+# Version alternative plus complète (recommandée)
+#~ msgid "Champs obligatoires"
+#~ msgstr "الحقول الإلزامية"

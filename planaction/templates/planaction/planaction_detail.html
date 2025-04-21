@@ -1,0 +1,290 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block toolbar %}
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Actions {% endblock %} </li>
+					<!--end::Item-->
+
+                    <!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">Details</li>
+					<!--end::Item-->
+
+				</ul>
+				<!--end::Breadcrumb-->
+				<!--begin::Page title-->
+				<div class="page-title d-flex align-items-center me-3">
+					<!--begin::Title-->
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">{% block toolbar_title %} Details d'une action {% endblock %}</h1>
+					<!--end::Title-->
+				</div>
+				<!--end::Page title-->
+			</div>
+			<!--end::Toolbar container-->
+			
+			<!--begin::Actions-->
+			<div class="d-flex align-items-center gap-3">
+				<!--begin::Secondary button-->
+				<div class="m-0">
+					<!--begin::Menu-->
+					<a href="{% url 'incident_list' %}" class="btn btn-sm fw-bold btn-secondary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Historique des actions</a>
+					<!--end::Menu-->
+				</div>
+			</div>
+			<!--end::Actions-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+{% endblock %}
+
+{% block content %}
+
+<div class="content flex-row-fluid" id="kt_content">
+    <!--begin::Card-->
+    <div class="card card-flush">
+        <!--begin::Card header-->
+        <div class="card-header">
+            <h1 class="card-title">{{ planaction.title }}</h1>
+            <div class="card-toolbar">
+                <!-- Bouton Modifier (ouvre la modale) -->
+                <button type="button" class="btn btn-sm btn-light-primary me-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                    <i class="ki-duotone ki-pencil fs-2"></i>Modifier
+                </button>
+                
+                <!-- <button type="button" class="btn btn-sm btn-light-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <i class="ki-duotone ki-trash fs-2"></i>Supprimer
+                </button> -->
+            </div>
+        </div>
+        <!--end::Card header-->
+
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+            <!-- Séparateur -->
+            <div class="separator separator-dashed my-5"></div>
+
+            <!--begin::Description-->
+            <div class="mb-7">
+                <p class="text-muted">{{ planaction.description }}</p>
+            </div>
+            <!--end::Description-->
+
+            <!--begin::Informations-->
+            <div class="row mb-7">
+                <!--begin::Col-->
+                <div class="col-md-6">
+                    <p><strong>Responsable :</strong> {{ planaction.created_by_user }}</p>
+                    <p><strong>Date de création :</strong> {{ planaction.creation_date|date:"d/m/Y H:i" }}</p>
+                </div>
+                <!--end::Col-->
+
+                <!--begin::Col-->
+                <div class="col-md-6">
+                    <p><strong>Incidents :</strong> {{ planaction.incident }}</p>
+                    <p><strong>Statut :</strong> 
+                        <span style="padding: 5px 10px; border-radius: 5px;
+                            background-color: 
+                                {% if planaction.status == 'pending' %} #ffcccb
+                                {% elif planaction.status == 'ongoing' %} #add8e6
+                                {% elif planaction.status == 'resolved' %} #90ee90
+                                {% elif planaction.status == 'done' %} #d3d3d3
+                                {% else %} #f0f0f0 {% endif %};">
+                            {{ planaction.get_status_display }}
+                        </span>
+                    </p>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Informations-->
+        </div>
+        <!--end::Card body-->
+        
+        <!-- Workflow des Statuts -->
+        <div class="card-body">
+            <div class="separator separator-dashed my-5"></div>  <!-- Ligne pointillée de séparation -->
+            
+            <div class="row">
+                <!-- Workflow visuel -->
+                <div class="col-md-8">
+                    <h3 class="mb-4">Workflow des Statuts</h3>
+                    <div class="d-flex align-items-center">
+                        <!-- Statut : Pending -->
+                        <div class="text-center me-2">
+                            <div class="p-2 rounded"
+                                style="background-color: {% if planaction.status == 'pending' %} #dc3545 {% else %} #e9ecef {% endif %};">
+                                <span class="text-white">En attente</span>
+                            </div>
+                        </div>
+
+                        <!-- Statut : Ongoing -->
+                        <div class="text-center me-2">
+                            <div class="p-2 rounded"
+                                style="background-color: {% if planaction.status == 'ongoing' %} #007bff {% else %} #e9ecef {% endif %};">
+                                <span class="text-white">En cours</span>
+                            </div>
+                        </div>
+
+                        <!-- Statut : Resolved -->
+                        <div class="text-center me-2">
+                            <div class="p-2 rounded"
+                                style="background-color: {% if planaction.status == 'resolved' %} #28a745 {% else %} #e9ecef {% endif %};">
+                                <span class="text-white">Terminé</span>
+                            </div>
+                        </div>
+
+                        <!-- Statut : Done -->
+                        <div class="text-center">
+                            <div class="p-2 rounded"
+                                style="background-color: {% if planaction.status == 'done' %} #d3d3d3 {% else %} #e9ecef {% endif %};">
+                                <span class="text-white">Cloturé</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton de changement de statut -->
+                <div class="col-md-4">
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3 text-end">
+                            <label class="form-label"> </label>
+                            <button type="submit" name="change_status" class="btn mt-2"
+                                style="
+                                    {% if planaction.status == 'pending' %}background-color: #dc3545;
+                                    {% elif planaction.status == 'ongoing' %}background-color: #007bff;
+                                    {% elif planaction.status == 'resolved' %}background-color: #28a745;
+                                    {% else %}background-color: #d3d3d3;{% endif %}
+                                    color: white; border: none; border-radius: 20px; cursor: pointer; padding: 5px 20px; width: auto; margin-left: auto; display: block; ">
+                                {% if planaction.status == 'pending' %}Commencer
+                                {% elif planaction.status == 'ongoing' %}Terminer
+                                {% elif planaction.status == 'resolved' %}Cloturer
+                                {% else %}Cloturé
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Card-->
+    
+    
+
+    <!--begin::Modale de modification-->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <!--begin::En-tête de la modale-->
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="editModalLabel">{% if object %}Modifier{% else %}Créer{% endif %} une action</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!--end::En-tête de la modale-->
+
+                <!--begin::Corps de la modale-->
+                <div class="modal-body">
+                    <!-- Formulaire de modification -->
+                    <form method="post" id="editForm" action="">
+                        {% csrf_token %}
+                        <!-- Afficher les champs du formulaire -->
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                            {{ form.description }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.created_by_user.id_for_label }}" class="form-label">{{ form.created_by_user.label }}</label>
+                            {{ form.created_by_user }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.incident.id_for_label }}" class="form-label">{{ form.incident.label }}</label>
+                            {{ form.incident }}
+                        </div>
+                    </form>
+                </div>
+                <!--end::Corps de la modale-->
+
+                <!--begin::Pied de la modale-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" form="editForm" class="btn btn-primary">Enregistrer</button>
+                </div>
+                <!--end::Pied de la modale-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modale de modification-->
+
+    <!--begin::Modale de confirmation de suppression-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!--begin::En-tête de la modale-->
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="deleteModalLabel">Supprimer le Plan d'Action</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!--end::En-tête de la modale-->
+
+                <!--begin::Corps de la modale-->
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer le plan d'action <strong>"{{ planaction.title }}"</strong> ?</p>
+                    <p class="text-muted">Cette action est irréversible.</p>
+                </div>
+                <!--end::Corps de la modale-->
+
+                <!--begin::Pied de la modale-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form method="post" action="{% url 'planaction-delete' planaction.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Confirmer</button>
+                    </form>
+                </div>
+                <!--end::Pied de la modale-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modale de confirmation de suppression-->
+</div>
+
+{% endblock %}

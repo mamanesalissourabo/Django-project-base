@@ -1,0 +1,104 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container py-5">
+    <!--begin::Card-->
+    <div class="card shadow-sm">
+        <!--begin::Card Header-->
+        <div class="card-header bg-light text-white text-center">
+            <h3 class="card-title fw-bold mb-0">Modifier l'évènement</h3>
+        </div>
+        <!--end::Card Header-->
+
+        <!--begin::Card Body-->
+        <div class="card-body">
+            <!--begin::Description-->
+            <div class="text-center mb-4">
+                <p class="text-muted">
+                    Si vous avez besoin d'aide, consultez 
+                    <a href="{% url 'faq_list'%}" class="link-primary fw-bold">la page d'aide</a>.
+                </p>
+            </div>
+            <!--end::Description-->
+
+            <!--begin::Form-->
+            <form method="post" enctype="multipart/form-data" class="form mb-0" id="kt_contact_form" action="">
+                {% csrf_token %}
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.location.label }}</label>
+                    {{ form.location }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.type.label }}</label>
+                    {{ form.type }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.category.label }}</label>
+                    {{ form.category }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.criticity.label }}</label>
+                    {{ form.criticity }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.photo.label }}</label>
+                    {{ form.photo }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-4 fv-row">
+                    <label class="fs-5 fw-semibold mb-2">{{ form.comment.label }}</label>
+                    {{ form.comment }}
+                </div>
+                <!--end::Input group-->
+
+                <!--begin::Separator-->
+                <div class="separator my-4"></div>
+                <!--end::Separator-->
+
+                <!--begin::Action buttons-->
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-light me-3" href="{% url 'incident_list' %}">Annuler</a>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+                <!--end::Action buttons-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Card Body-->
+    </div>
+    <!--end::Card-->
+</div>
+
+{% endblock %}

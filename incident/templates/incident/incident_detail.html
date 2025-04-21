@@ -1,0 +1,232 @@
+{% extends "base/base.html" %}
+
+{% block toolbar %}
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Incident {% endblock %} </li>
+					<!--end::Item-->
+
+                    <!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">Details</li>
+					<!--end::Item-->
+
+				</ul>
+				<!--end::Breadcrumb-->
+				<!--begin::Page title-->
+				<div class="page-title d-flex align-items-center me-3">
+					<!--begin::Title-->
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">{% block toolbar_title %} Details d'un évènement {% endblock %}</h1>
+					<!--end::Title-->
+				</div>
+				<!--end::Page title-->
+			</div>
+			<!--end::Toolbar container-->
+			
+			<!--begin::Actions-->
+			<div class="d-flex align-items-center gap-3">
+				<!--begin::Secondary button-->
+				<div class="m-0">
+					<!--begin::Menu-->
+					<a href="{% url 'incident_list' %}" class="btn btn-sm fw-bold btn-secondary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Historique des évènements</a>
+					<!--end::Menu-->
+				</div>
+			</div>
+			<!--end::Actions-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="card card-flush">
+    <!--begin::Card header-->
+    <div class="card-header">
+        <h1 class="card-title">{{ incident.name }}</h1>
+        <div class="card-toolbar">
+            <!-- Bouton Modifier -->
+            <a href="{% url 'incident_update' incident.pk %}" class="btn btn-sm btn-light-primary me-2">
+                <i class="ki-duotone ki-pencil fs-2"></i>Modifier
+            </a>
+            <!-- Bouton Supprimer -->
+        </div>
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Card body-->
+    <div class="card-body pt-0">
+        <!-- Séparateur -->
+        <div class="separator separator-dashed my-5"></div>
+
+        <!--begin::Informations-->
+        <div class="row mb-7">
+            <!--begin::Col gauche-->
+            <div class="col-md-6">
+                <p><strong>Site :</strong> {{ incident.site }}</p>
+                <p><strong>Emplacement :</strong> {{ incident.emplacement }}</p>
+                <p><strong>Description :</strong> {{ incident.description }}</p>
+                <p><strong>Signalé par :</strong> {{ incident.created_by_user }}</p>
+            </div>
+            <!--end::Col gauche-->
+
+            <!--begin::Col droit-->
+            <div class="col-md-6">
+                <p><strong>Type d'incident :</strong> {{ incident.type_incident }}</p>
+                <p><strong>Cause Principale :</strong> {{ incident.cause_principale }}</p>
+                <p><strong>Commentaire :</strong> {{ incident.comment }}</p>
+                <p><strong>Statut :</strong> <span style="
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    background-color: 
+                        {% if incident.status == 'pending' %} #ffcccb
+                        {% elif incident.status == 'ongoing' %} #add8e6
+                        {% elif incident.status == 'resolved' %} #90ee90
+                        {% elif incident.status == 'done' %} #d3d3d3
+                        {% else %} #f0f0f0 {% endif %};
+                "> {{ incident.get_status_display }} </span></p>
+              
+            </div>
+            <!--end::Col droit-->
+        </div>
+        <!--end::Informations-->
+
+        <!--begin::Image-->
+        {% if incident.photo %}
+        <div class="mb-7">
+            <img src="{{ incident.photo.url }}" alt="Photo de l'incident" class="img-fluid rounded">
+        </div>
+        {% endif %}
+        <!--end::Image-->
+    </div>
+    <!--end::Card body-->
+</div>
+
+<!-- Nouvelle Section : Workflow et Actions -->
+<div class="card card-flush mt-5">
+    <div class="card-body">
+        <div class="row">
+            <!-- Workflow des Statuts -->
+            <div class="col-md-8">
+                <h3 class="mb-4">Workflow des Statuts</h3>
+                <div class="d-flex align-items-center">
+                    <!-- Statut : Pending -->
+                    <div class="text-center me-2">
+                        <div class="p-2 rounded"
+                            style="background-color: {% if incident.status == 'pending' %} #dc3545 {% else %} #e9ecef {% endif %};">
+                            <span class="text-white">En attente</span>
+                        </div>
+                    </div>
+
+                    <!-- Statut : Ongoing -->
+                    <div class="text-center me-2">
+                        <div class="p-2 rounded"
+                            style="background-color: {% if incident.status == 'ongoing' %} #007bff {% else %} #e9ecef {% endif %};">
+                            <span class="text-white">En cours</span>
+                        </div>
+                    </div>
+                    <!-- Statut : Resolved -->
+                    <div class="text-center me-2">
+                        <div class="p-2 rounded"
+                            style="background-color: {% if incident.status == 'resolved' %} #28a745 {% else %} #e9ecef {% endif %};">
+                            <span class="text-white">Résolu</span>
+                        </div>
+                    </div>
+
+                    <!-- Statut : Done -->
+                    <div class="text-center">
+                        <div class="p-2 rounded"
+                            style="background-color: {% if incident.status == 'done' %} #d3d3d3 {% else %} #e9ecef {% endif %};">
+                            <span class="text-white">Cloturé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions : Assignation et Changement de Statut -->
+            <div class="col-md-4">
+                <div class="d-flex gap-3">
+                    {% if can_assign_user %}
+                    <!-- Formulaire d'Assignation -->
+                    <form method="post" class="flex-grow-1">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.assigned_to }}
+                        </div>
+                        <button type="submit" name="assign_user" class="btn w-100" 
+                        style="background-color: #6c757d; color: white; padding: 5px 10px; border: none; border-radius: 20px; cursor: pointer;">Assigner</button>
+                    </form>
+                    {% elif can_change_status %}
+                    <div class="mb-3">
+                        <small>Un nouvel incident vous a été assigné.</small>
+                        <input type="text" class="form-select" style="background-color: #6c757d; color: white; padding: 5px 10px; border-radius: 15px; cursor: pointer;"
+                         value="{{ incident.assigned_to|default:'Non assigné' }}" readonly>
+                        <!-- <small class="text-muted">L'assignation n'est plus possible car l'incident est en cours ou terminé.</small> -->
+                    </div>
+                    {% endif %}
+                    <!-- Bouton de Changement de Statut -->
+                    {% if can_change_status %}
+                    <form method="post" class="flex-grow-1">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="action" class="form-label">Changer le Statut</label>
+                            <button type="submit" name="change_status" class="btn w-100 mt-3"
+                            style="
+                                {% if incident.status == 'pending' %}background-color: #dc3545;
+                                {% elif incident.status == 'ongoing' %}background-color: #007bff;
+                                {% elif incident.status == 'resolved' %}background-color: #28a745;
+                                {% else %}background-color: #d3d3d3;{% endif %}
+                                color: white; padding: 5px 5px; border: none; border-radius: 20px; cursor: pointer;">
+                            {% if incident.status == 'pending' %}Commencer
+                            {% elif incident.status == 'ongoing' %}Terminer
+                            {% elif incident.status == 'resolved' %}Cloturer
+                            {% else %}Done
+                            {% endif %}
+                        </button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

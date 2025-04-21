@@ -1,0 +1,46 @@
+<!-- Modale pour créer un plan d'action -->
+<div class="modal fade" id="createPlanActionModal" tabindex="-1" aria-labelledby="createPlanActionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <!--begin::En-tête de la modale-->
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="createPlanActionModalLabel">Créer une action</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!--end::En-tête de la modale-->
+
+            <!--begin::Corps de la modale-->
+            <div class="modal-body">
+                <!-- Formulaire de création -->
+                <form method="post" id="createForm" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.created_by_user.id_for_label }}" class="form-label">{{ form.created_by_user.label }}</label>
+                        {{ form.created_by_user }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.incident.id_for_label }}" class="form-label">{{ form.incident.label }}</label>
+                        {{ form.incident }}
+                    </div>
+                </form>
+            </div>
+            <!--end::Corps de la modale-->
+
+            <!--begin::Pied de la modale-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" form="createForm" class="btn btn-primary">Enregistrer</button>
+            </div>
+            <!--end::Pied de la modale-->
+        </div>
+    </div>
+</div>
+<!--end::Modale de création-->

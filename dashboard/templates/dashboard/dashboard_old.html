@@ -1,0 +1,455 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<!--begin::Dashboard-->
+<div class="row g-6 g-xl-9 mb-6">
+    <!-- Utilisateur normaux et admin mais seulement les admins ont le droit de voir les incidents assignes-->
+     
+    <!-- Section Résumé des Incidents -->
+    <div class="col-lg-6">
+        <div class="card card-flush h-lg-100">
+            <!--begin::Card header-->
+            <div class="card-header mt-6">
+                <div class="card-title flex-column">
+                    <h3 class="fw-bold mb-1">Résumé des Incidents</h3>
+                    <div class="fs-6 fw-semibold text-gray-500">{{ total_incidents }} Incidents Signalés</div>
+                </div>
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body p-9 pt-5">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-wrap">
+                    <!--begin::Chart-->
+                    <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
+                        <!-- Texte à l'intérieur du disque -->
+                        <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
+                            <span class="fs-4 fw-bold">{{ total_incidents }}</span>
+                            <span class="fs-7 fw-semibold text-gray-500">Total Incidents</span>
+                        </div>
+                        <canvas id="incidentsChart"></canvas>
+                    </div>
+                    <!--end::Chart-->
+                    <!--begin::Labels-->
+                    <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-danger me-3"></div>
+                            <div class="text-gray-500">Pending</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ status_count.pending }}</div>
+                        </div>
+                        <!--end::Label-->
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-primary me-3"></div>
+                            <div class="text-gray-500">Ongoing</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ status_count.ongoing }}</div>
+                        </div>
+                        <!--end::Label-->
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-success me-3"></div>
+                            <div class="text-gray-500">Resolved</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ status_count.resolved }}</div>
+                        </div>
+                        <!--end::Label-->
+                        <!--begin::Label-->
+                        {% if is_superuser %}
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-warning me-3"></div>
+                            <div class="text-gray-500">Assigned</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ status_count.assigned }}</div>
+                        </div>
+                        {% endif %}
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Labels-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Card body-->
+        </div>
+    </div>
+
+    <!-- Section Évolution des Incidents (uniquement pour les superusers) -->
+    {% if is_superuser %}
+    <div class="col-lg-6">
+        <div class="card card-flush h-lg-100">
+            <!--begin::Card header-->
+            <div class="card-header mt-6">
+                <!--begin::Card title-->
+                <div class="card-title flex-column">
+                    <h3 class="fw-bold mb-1">Évolution des Incidents Signalés</h3>
+                    <!--begin::Labels-->
+                    <div class="fs-6 d-flex text-gray-500 fs-6 fw-semibold">
+                        <!--begin::Label-->
+                        <div class="d-flex align-items-center me-6">
+                            <span class="menu-bullet d-flex align-items-center me-2">
+                                <span class="bullet bg-danger"></span>
+                            </span>Déclarés
+                        </div>
+                        <div class="d-flex align-items-center me-6">
+                            <span class="menu-bullet d-flex align-items-center me-2">
+                                <span class="bullet bg-primary"></span>
+                            </span>En cours
+                        </div>
+                        <div class="d-flex align-items-center me-6">
+                            <span class="menu-bullet d-flex align-items-center me-2">
+                                <span class="bullet bg-success"></span>
+                            </span>Resolus
+                        </div>
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Labels-->
+                </div>
+                <!--end::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <!--begin::Select-->
+                    <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-sm fw-bold w-100px">
+                        <option value="1">30 derniers jours</option>
+                        <option value="2">60 derniers jours</option>
+                        <option value="3">90 derniers jours</option>
+                    </select>
+                    <!--end::Select-->
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-10 pb-0 px-5">
+                <!--begin::Chart-->
+                <div id="kt_project_overview_graph" class="card-rounded-bottom" style="height: 300px">
+                    <canvas id="incidentsTrendChart"></canvas>
+                </div>
+                <!--end::Chart-->
+            </div>
+            <!--end::Card body-->
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Section Score de l'utilisateur (uniquement pour les utilisateurs normaux) -->
+    {% if not is_superuser %}
+    <div class="col-lg-6">
+        {% include "reward/user_score.html" %}
+    </div>
+    {% endif %}
+
+</div>
+<!--end::Dashboard-->
+
+<!-- Section Classement (masquée par défaut pour les utilisateurs normaux) -->
+{% if not is_superuser %}
+<div id="leaderboardSection" class="row g-6 g-xl-9 mb-6 mt-0" style="display: none;">
+    {% include "reward/leaderboard.html" with ranked_users=ranked_users %}
+</div>
+{% endif %}
+
+<!-- Section Classement (uniquement pour les superusers) -->
+{% if is_superuser %}
+<div class="row g-6 g-xl-9 mb-6">
+    {% include "reward/leaderboard.html" with ranked_users=ranked_users %}
+</div>
+{% endif %}
+<!--end::Dashboard-->
+
+<!-- Section Helpdesk Dashboard (uniquement pour les utilisateurs avec la permission can_change_incident_status) -->
+{% if perms.incident.can_change_incident_status and not is_superuser %}
+<div class="row g-6 g-xl-9 mb-6">
+    <!-- Carte des incidents assignés -->
+    <div class="col-lg-6">
+        <!--begin::Summary-->
+        <div class="card card-flush h-lg-100">
+            <!--begin::Card header-->
+            <div class="card-header mt-6">
+                <!--begin::Card title-->
+                <div class="card-title flex-column">
+                    <h3 class="fw-bold mb-1">Résumé des Incidents</h3>
+                    <div class="fs-6 fw-semibold text-gray-500">{{ helpdesk_total_incidents }} Incidents Assignés</div>
+                </div>
+                <!--end::Card title-->
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <a href="{% url 'incident_list' %}" class="btn btn-light btn-sm">Voir la liste</a>
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body p-9 pt-5">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-wrap">
+                    <!--begin::Chart-->
+                    <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
+                        <!-- Texte à l'intérieur du disque -->
+                        <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
+                            <span class="fs-2qx fw-bold">{{ helpdesk_total_incidents }}</span>
+                            <span class="fs-7 fw-semibold text-gray-500">Total Incidents</span>
+                        </div>
+                        <canvas id="assignedincidentsChart"></canvas>
+                    </div>
+                    <!--end::Chart-->
+                    <!--begin::Labels-->
+                    <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-danger me-3"></div>
+                            <div class="text-gray-500">En attente</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ helpdesk_status_count.pending }}</div>
+                        </div>
+                        <!--end::Label-->
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-primary me-3"></div>
+                            <div class="text-gray-500">En cours</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ helpdesk_status_count.ongoing }}</div>
+                        </div>
+                        <!--end::Label-->
+                        <!--begin::Label-->
+                        <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                            <div class="bullet bg-success me-3"></div>
+                            <div class="text-gray-500">Résolu</div>
+                            <div class="ms-auto fw-bold text-gray-700">{{ helpdesk_status_count.resolved }}</div>
+                        </div>
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Labels-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Summary-->
+    </div>
+
+    <!-- Carte des incidents par criticité -->
+    <div class="col-lg-6">
+        <div class="card card-flush h-lg-100">
+            <!--begin::Card header-->
+            <div class="card-header mt-6">
+                <!--begin::Card title-->
+                <div class="card-title flex-column">
+                    <h3 class="fw-bold mb-1">Incidents par Criticité</h3>
+                    <div class="fs-6 fw-semibold text-gray-500">Répartition des incidents par niveau de criticité</div>
+                </div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body p-9 pt-5">
+                <!--begin::Chart-->
+                <div class="position-relative d-flex flex-center h-300px">
+                    <canvas id="criticityChart"></canvas>
+                </div>
+                <!--end::Chart-->
+            </div>
+            <!--end::Card body-->
+        </div>
+    </div>
+</div>
+<!--end::Dashboard-->
+{% endif %}
+
+<!-- Script JavaScript pour gérer l'affichage du classement -->
+<script>
+    document.getElementById('showLeaderboardButton').addEventListener('click', function() {
+        const leaderboardSection = document.getElementById('leaderboardSection');
+        if (leaderboardSection.style.display === 'none') {
+            leaderboardSection.style.display = 'block'; // Afficher la section
+        } else {
+            leaderboardSection.style.display = 'none'; // Masquer la section
+        }
+    });
+</script>
+
+<!-- Script pour le graphique en anneau -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("running")
+        var ctx = document.getElementById('incidentsChart').getContext('2d');
+        var incidentsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pending', 'Ongoing', 'Resolved', 'Done'],
+                datasets: [{
+                    data: [
+                        {{ status_count.pending }},
+                        {{ status_count.ongoing }},
+                        {{ status_count.resolved }},
+                    ],
+                    backgroundColor: [
+                        '#F64E60', // Rouge pour Pending
+                        '#6993FF', // Bleu pour Ongoing
+                        '#1BC5BD', // Vert pour Resolved
+                    ],
+                    borderWidth: 0 // Pas de bordure
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%', // Pour un effet d'anneau plus épais
+                plugins: {
+                    legend: {
+                        display: false // Masquer la légende
+                    },
+                    tooltip: {
+                        enabled: true // Activer les infobulles
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<!-- Script pour le graphique en courbe -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('incidentsTrendChart').getContext('2d');
+        var incidentsTrendChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ dates|safe }},  // Dates des incidents
+                datasets: [
+                    {
+                        label: 'Incidents Resolus',
+                        data: {{ resolved_data|safe }},
+                        borderColor: '#00FF00', // Vert
+                        fill: false,
+                    },
+                    {
+                        label: 'Incidents en Cours',
+                        data: {{ ongoing_data|safe }},
+                        borderColor: '#4d8bff', // Bleu
+                        fill: false,
+                    },
+                    {
+                        label: 'Incidents Déclarés',
+                        data: {{ declared_data|safe }},
+                        borderColor: '#F64E60', // Rouge
+                        fill: false,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true, // Afficher la légende
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true // Activer les infobulles
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date',
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Nombre d\'incidents',
+                        },
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx2 = document.getElementById('criticityChart').getContext('2d');
+        var criticityChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: {{ criticities|safe }},  // Criticités (ex : Faible, Moyenne, Élevée)
+                datasets: [{
+                    label: 'Incidents',
+                    data: {{ totals|safe }},    // Nombre d'incidents par criticité
+                    backgroundColor: [
+                        '#dc3545',  // Rouge pour Élevée
+                        '#4d8bff', // Bleu pour Faible
+                        '#ffc107', // Jaune pour Moyenne
+                        
+                    ],
+                    borderWidth: 0 // Pas de bordure
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Nombre d\'incidents'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Criticité'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Masquer la légende
+                    },
+                    tooltip: {
+                        enabled: true // Activer les infobulles
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Graphique des incidents par statut (doughnut)
+        var ctx = document.getElementById('assignedincidentsChart').getContext('2d');
+        var assignedincidentsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['En attente', 'En cours', 'Résolu'],
+                datasets: [{
+                    data: [{{ status_count.pending }}, {{ status_count.ongoing }}, {{ status_count.resolved }}],
+                    backgroundColor: [
+                        '#F64E60', // Rouge pour En attente
+                        '#4d8bff', // Bleu pour En cours
+                        '#2bccb4'  // Vert pour Résolu
+                    ],
+                    borderWidth: 0 // Pas de bordure
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%', // Pour un effet d'anneau plus épais
+                plugins: {
+                    legend: {
+                        display: false // Masquer la légende
+                    },
+                    tooltip: {
+                        enabled: true // Activer les infobulles
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

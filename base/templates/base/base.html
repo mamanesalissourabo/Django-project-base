@@ -15,7 +15,7 @@
 		<meta property="og:title" content="Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes" />
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Metronic by Keenthemes" />
-
+      
 		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
         <link rel="canonical" href="{% static 'https://preview.keenthemes.com/metronic8' %}" />
 		<link rel="shortcut icon" href="{% static 'assets/media/logos/favicon.ico' %}" />
@@ -31,9 +31,19 @@
 		<link href=" {% static 'assets/plugins/global/plugins.bundle.css' %} " rel="stylesheet" type="text/css" />
 		<link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+		
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 	</head>
 	<!--end::Head-->
+	
+	<style>
+		#kt_app_content {
+			margin-top: 30px; /* Ajustez cette valeur selon vos besoins */
+		}
+	</style>
+	
 	<!--begin::Body-->
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
 		<!--begin::Theme mode setup on page load-->
@@ -45,351 +55,45 @@
 
 			<!--begin::Page-->
 			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-
-				<!--begin::Header-->
-				<div id="kt_app_header" class="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}" data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}" data-kt-sticky-animation="false">
-					<!--begin::Header container-->
-					<div class="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
-						<!--begin::Sidebar mobile toggle-->
-						<div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
-							<div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
-								<i class="ki-duotone ki-abstract-14 fs-2 fs-md-1">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
-							</div>
-						</div>
-						<!--end::Sidebar mobile toggle-->
-
-						<!--begin::Mobile logo-->
-						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-							<a href="index.html" class="d-lg-none">
-								<img alt="Logo" src="{% static 'assets/media/logos/default-small.svg' %}" class="h-30px" />
-							</a>
-						</div>
-						<!--end::Mobile logo-->
-
-						<!--begin::Header wrapper-->
-						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
-							
-                            {% include 'layout/header/menu-wrapper.html' %}
-
-							{% include 'layout/header/navbar.html' %}
-                            
-						</div>
-						<!--end::Header wrapper-->
-					
-                        </div>
-					<!--end::Header container-->
-				</div>
-				<!--end::Header-->
-
+                
+				{% include 'layout/header/header.html' %}
+				
 				<!--begin::Wrapper-->
 				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-					<!--begin::Sidebar-->
-					<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
-						<!--begin::Logo-->
-						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-							<!--begin::Logo image-->
-							<a href="index.html">
-								<img alt="Logo" src="{% static 'assets/media/logos/default-dark.svg' %}" class="h-25px app-sidebar-logo-default" />
-								<img alt="Logo" src="{% static 'assets/media/logos/default-small.svg' %}" class="h-20px app-sidebar-logo-minimize" />
-							</a>
-							<!--end::Logo image-->
-							<!--begin::Sidebar toggle-->
-							<!--begin::Minimized sidebar setup:
-                                if (isset($_COOKIE["sidebar_minimize_state"]) && $_COOKIE["sidebar_minimize_state"] === "on") { 
-                                    1. "src/js/layout/sidebar.js" adds "sidebar_minimize_state" cookie value to save the sidebar minimize state.
-                                    2. Set data-kt-app-sidebar-minimize="on" attribute for body tag.
-                                    3. Set data-kt-toggle-state="active" attribute to the toggle element with "kt_app_sidebar_toggle" id.
-                                    4. Add "active" class to to sidebar toggle element with "kt_app_sidebar_toggle" id.
-                                }
-                            -->
-							<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
-								<i class="ki-duotone ki-black-left-line fs-3 rotate-180">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
-							</div>
-							<!--end::Sidebar toggle-->
-						</div>
-						<!--end::Logo-->
-						<!--begin::sidebar menu-->
-						<div class="app-sidebar-menu overflow-hidden flex-column-fluid">
-							<!--begin::Menu wrapper-->
-							<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
-								<!--begin::Scroll wrapper-->
-								<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
-									<!--begin::Menu-->
-									<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-element-11 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-														<span class="path4"></span>
-													</i>
-												</span>
-												<span class="menu-title">Dashboards</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link active" href="index.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Default</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/ecommerce.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">eCommerce</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/projects.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Projects</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="dashboards/online-courses.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Online Courses</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-													
-											</div>
-											<!--end:Menu sub-->
-										</div>
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-item pt-5">
-											<!--begin:Menu content-->
-											<div class="menu-content">
-												<span class="menu-heading fw-bold text-uppercase fs-7">Pages</span>
-											</div>
-											<!--end:Menu content-->
-										</div>
-										<!--end:Menu item-->
-										
-                                       
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-abstract-39 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-													</i>
-												</span>
-												<span class="menu-title">Social</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/social/feeds.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Feeds</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/social/activity.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Activty</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/social/followers.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Followers</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/social/settings.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Settings</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-											</div>
-											<!--end:Menu sub-->
-										</div>
-										<!--end:Menu item-->
-
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-bank fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-													</i>
-												</span>
-												<span class="menu-title">Blog</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion menu-active-bg">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/blog/home.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Blog Home</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/blog/post.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Blog Post</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-											</div>
-											<!--end:Menu sub-->
-										</div>
-										<!--end:Menu item-->
-
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-chart-pie-3 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-													</i>
-												</span>
-												<span class="menu-title">FAQ</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion menu-active-bg">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/faq/classic.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">FAQ Classic</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/faq/extended.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">FAQ Extended</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-											</div>
-											<!--end:Menu sub-->
-										</div>
-										<!--end:Menu item-->
-										
-									</div>
-									<!--end::Menu-->
-								</div>
-
-								<!--end::Scroll wrapper-->
-							</div>
-							<!--end::Menu wrapper-->
-						</div>
-						<!--end::sidebar menu-->
-
-						
-					</div>
-					<!--end::Sidebar-->
+					
+					{% include 'layout/sidebar/menu.html' %}
 
 					<!--begin::Main-->
 					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 
 						<!--begin::Content wrapper-->
 						<div class="d-flex flex-column flex-column-fluid">
+							
+							{% block toolbar %}
+							{% include "layout/header/toolbar.html" %}
+							{% endblock%}
+
+							<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid  border-0" >
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container  container-fluid border-0 ">
+
+									{% block content %}
+									 <!--begin::Sidebar toggle-->
+        if (isset($_COOKIE["sidebar_minimize_state"]) && $_COOKIE["sidebar_minimize_state"] === "on") { 
+            1. "src/js/layout/sidebar.js" adds "sidebar_minimize_state" cookie value to save the sidebar minimize state.
+            2. Set data-kt-app-sidebar-minimize="on" attribute for body tag.
+            3. Set data-kt-toggle-state="active" attribute to the toggle element with "kt_app_sidebar_toggle" id.
+            4. Add "active" class to to sidebar toggle element with "kt_app_sidebar_toggle" id.
+        }
+
+									{% endblock %}
+
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
                             
-                            {% include "layout/header/toolbar.html" %}
-					
-                            {% block toolbar %}
-
-                            {% endblock%}
-
 						</div>
 						<!--end::Content wrapper-->
 
@@ -430,6 +134,7 @@
 		<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
@@ -447,6 +152,12 @@
 		<script src="{% static 'assets/js/custom/utilities/modals/new-target.js' %}"></script>
 		<script src="{% static 'assets/js/custom/utilities/modals/users-search.js' %}"></script>
 		<!--end::Custom Javascript-->
+
+
+		<!-- DataTables JS -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+          
 		<!--end::Javascript-->
 	</body>
 	<!--end::Body-->

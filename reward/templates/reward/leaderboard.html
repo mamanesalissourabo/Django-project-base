@@ -1,0 +1,154 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block toolbar %}
+
+{% load static %}
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Classement {% endblock %} </li>
+					<!--end::Item-->
+				</ul>
+				<!--end::Breadcrumb-->
+				<!--begin::Page title-->
+				<div class="page-title d-flex align-items-center me-3">
+					<!--begin::Title-->
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">{% block toolbar_title %} Classement des utilisateurs {% endblock %}</h1>
+					<!--end::Title-->
+				</div>
+				<!--end::Page title-->
+			</div>
+			<!--end::Toolbar container-->
+			
+			<!--begin::Actions-->
+			<div class="d-flex align-items-center gap-3">
+				<!--begin::Secondary button-->
+				<div class="m-0">
+					<!--begin::Menu-->
+					<a href="{% url 'incident_list' %}" class="btn btn-sm fw-bold btn-secondary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Historique des incidents</a>
+					<!--end::Menu-->
+				</div>
+				<!--end::Secondary button-->
+				{% if dashboard_type == 'superuser' %}
+				<!-- <button  id="toggleLeaderboardBtn" class="btn btn-sm btn-primary">
+					<i class="fas fa-trophy me-1"></i>
+					<span class="toggle-text">Afficher Classement</span>
+				</button> -->
+				<a href="{% url 'leaderboard' %}" class="btn btn-sm btn-primary">
+					<i class="fas fa-trophy me-1"></i>
+					<span class="toggle-text">Afficher Classement</span>
+				</a> 
+
+			{% endif %}
+			</div>
+			<!--end::Actions-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+<!--end::Toolbar-->
+
+{% endblock toolbar %}
+
+{% block content %}
+
+<style>
+    /* Style de la carte */
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    /* Style du tableau */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center; /* Centrer le texte */
+    }
+
+    .table th {
+        background-color: #f4f4f4 ; /* Vert foncé #d7f4f4  #a6c6c7*/
+        color: white; /* Texte en blanc pour contraster */
+        font-weight: bold;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<div class="content flex-row-fluid" id="kt_content">
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Classement</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Nom</th>
+                            <th>Nombre d'Incidents signalés</th>
+                            <th>Bonus gagnés</th>
+                            <th>Total Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in ranked_users %}
+                        <tr>
+                            <td>{{ user.rank }}</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.incident_count }}</td>
+                            <td>{{ user.total_bonus }}</td>
+                            <td>{{ user.total_points }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

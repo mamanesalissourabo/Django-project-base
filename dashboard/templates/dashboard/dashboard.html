@@ -1,0 +1,137 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Dashboard principal -->
+<div class="row g-6 g-xl-9 mb-6">
+
+    <!-- Section Résumé des Incidents -->
+    <div class="col-lg-6">
+        <div class="card card-flush h-lg-100">
+            <div class="card-header mt-6">
+                <div class="card-title flex-column">
+                    <h3 class="fw-bold mb-1">
+                        {% if dashboard_type == 'helpdesk' %}
+                            Incidents Assignés
+                        {% else %}
+                            Résumé des Incidents
+                        {% endif %}
+                    </h3>
+                    <div class="fs-6 fw-semibold text-gray-500">{{ total_incidents }} 
+                        {% if dashboard_type == 'helpdesk' %}
+                            Incidents Assignés
+                        {% else %}
+                            Incidents Signalés
+                        {% endif %}
+                    </div>
+                </div>
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar">
+                    <a href="{% url 'incident_list' %}" class="btn btn-light btn-sm">Voir la liste</a>
+                </div>
+                <!--end::Card toolbar-->
+            </div>
+            <div class="card-body p-9 pt-5">
+                <div class="d-flex flex-wrap">
+                    <div class="position-relative d-flex flex-center h-175px w-175px me-15 mb-7">
+                        <div class="position-absolute translate-middle start-50 top-50 d-flex flex-column flex-center">
+                            <span class="fs-4 fw-bold">{{ total_incidents }}</span>
+                            <span class="fs-7 fw-semibold text-gray-500">Total Incidents</span>
+                        </div>
+                        <canvas id="incidentsChart"></canvas>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11 mb-5">
+                        {% for status, count in status_count.items %}
+                            {% if status != 'assigned' or dashboard_type == 'superuser' %}
+                                <div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+                                    <div class="bullet 
+                                        {% if status == 'pending' %}bg-danger
+                                        {% elif status == 'ongoing' %}bg-primary
+                                        {% elif status == 'resolved' %}bg-success
+                                        {% else %}bg-warning{% endif %} me-3">
+                                    </div>
+                                    <div class="text-gray-500">
+                                        {% if status == 'pending' %}En attente
+                                        {% elif status == 'ongoing' %}En cours
+                                        {% elif status == 'resolved' %}Résolu
+                                        {% else %}Assignés{% endif %}
+                                    </div>
+                                    <div class="ms-auto fw-bold text-gray-700">{{ count }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section Score de l'utilisateur (uniquement pour les utilisateurs normaux) -->
+    {% if dashboard_type == 'normal' %}
+    <div class="col-lg-6">
+        {% include "reward/user_score.html" %}
+    </div>
+    {% endif %}
+
+    <!-- Section spécifique pour chaque type d'utilisateur -->
+    {% if dashboard_type == 'superuser' %}
+        <!-- Graphique d'évolution pour superuser -->
+        <div class="col-lg-6">
+            <div class="card card-flush h-lg-100">
+                <div class="card-header mt-6">
+                    <div class="card-title flex-column">
+                        <h3 class="fw-bold mb-1">Évolution des Incidents</h3>
+                        <div class="fs-6 d-flex text-gray-500 fs-6 fw-semibold">
+                            <div class="d-flex align-items-center me-6">
+                                <span class="bullet bg-danger me-2"></span>Déclarés
+                            </div>
+                            <div class="d-flex align-items-center me-6">
+                                <span class="bullet bg-primary me-2"></span>En cours
+                            </div>
+                            <div class="d-flex align-items-center me-6">
+                                <span class="bullet bg-success me-2"></span>Resolus
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-toolbar">
+                        <select name="status" class="form-select form-select-solid form-select-sm fw-bold w-100px">
+                            <option value="1">30 derniers jours</option>
+                            <option value="2">60 derniers jours</option>
+                            <option value="3">90 derniers jours</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body pt-10 pb-0 px-5">
+                    <div id="kt_project_overview_graph" class="card-rounded-bottom" style="height: 300px">
+                        <canvas id="incidentsTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    {% elif dashboard_type == 'helpdesk' %}
+        <!-- Graphique par criticité pour helpdesk -->
+        <!-- <div class="col-lg-6">
+            <div class="card card-flush h-lg-100">
+                <div class="card-header mt-6">
+                    <div class="card-title flex-column">
+                        <h3 class="fw-bold mb-1">Incidents par Priorité</h3>
+                        <div class="fs-6 fw-semibold text-gray-500">Répartition par niveau de priorité</div>
+                    </div>
+                </div>
+                <div class="card-body p-9 pt-5">
+                    <div class="position-relative d-flex flex-center h-300px">
+                        <canvas id="criticityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    {% endif %}
+</div>
+
+
+{% include "dashboard/charts_js.html" %}
+
+{% endblock %}

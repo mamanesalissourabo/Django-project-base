@@ -1,0 +1,143 @@
+<div class="card reward-card">
+    <div class="card-header reward-header">
+        <h3 class="card-title reward-title">🌟 Votre Score 🌟</h3>
+    </div>
+    <div class="card-body reward-body">
+        {% if user_profile %}
+            <div class="reward-points">
+                <span class="points-icon">🏆</span>
+                <p class="points-text">Vous avez <strong class="points-highlight">{{ user_profile.total_points }}</strong> points !</p>
+            </div>
+            <p class="reward-message">Continuez à signaler des incidents pour gagner encore plus de points et grimper dans le classement !</p>
+        {% else %}
+            <div class="reward-points">
+                <span class="points-icon">🚀</span>
+                <p class="points-text">Vous n'avez pas encore de profil. <strong class="points-highlight">Points : 0</strong></p>
+            </div>
+            <p class="reward-message">Commencez dès maintenant à signaler des incidents et gagnez des points !</p>
+        {% endif %}
+        <div class="reward-actions">
+            <a href="{% url 'incident_list' %}" class="btn btn-primary reward-btn">
+                <i class="fas fa-list"></i> Voir la liste des incidents
+            </a>
+            <button id="showLeaderboardButton" class="btn btn-success reward-btn">
+                <i class="fas fa-trophy"></i> Voir le classement
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Style général de la carte */
+    .reward-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #ffffff, #ffffff);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* .reward-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+    } */
+
+    /* En-tête de la carte */
+    .reward-header {
+        color: white;
+        border-radius: 15px 15px 0 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .reward-title {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    /* Corps de la carte */
+    .reward-body {
+        padding: 25px;
+        text-align: center;
+    }
+
+    /* Section des points */
+    .reward-points {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .points-icon {
+        font-size: 2.5rem;
+        margin-right: 15px;
+    }
+
+    .points-text {
+        font-size: 1.5rem;
+        margin: 0;
+        color: #333;
+    }
+
+    .points-highlight {
+        color: #2575fc;
+        font-weight: bold;
+    }
+
+    /* Message d'encouragement */
+    .reward-message {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 45px;
+    }
+
+    /* Boutons d'action */
+    .reward-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .reward-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .reward-btn:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Bouton "Voir la liste des incidents" */
+    .btn-dark.reward-btn {
+        background: #34495e; /* Couleur unie (gris foncé) */
+        border: none;
+        color: white;
+    }
+
+    .btn-dark.reward-btn:hover {
+        background: #2c3e50; /* Légèrement plus foncé au survol */
+    }
+
+    /* Bouton "Voir le classement" */
+    .btn-success.reward-btn {
+        background: #28a745; /* Couleur unie (vert) */
+        border: none;
+        color: white;
+    }
+
+    .btn-success.reward-btn:hover {
+        background: #218838; /* Légèrement plus foncé au survol */
+    }
+
+    .reward-btn i {
+        font-size: 1.2rem;
+    }
+</style>

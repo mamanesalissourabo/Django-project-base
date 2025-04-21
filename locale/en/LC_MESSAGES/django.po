@@ -1,0 +1,194 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-12 09:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\base\forms.py:12 .\base\forms.py:15
+msgid "Nom d'utilisateur"
+msgstr "Username"
+
+#: .\base\forms.py:19 .\base\forms.py:22
+msgid "Mot de passe"
+msgstr "Password"
+
+#: .\base\templates\Authentification\login.html:25
+msgid "Safetyfirst"
+msgstr ""
+
+#: .\base\templates\Authentification\login.html:26
+msgid "Veuillez vous connecter à votre compte et commencer l'aventure"
+msgstr "Please log in to your account and start the adventure"
+
+#: .\base\templates\Authentification\login.html:51
+msgid "Mot de passe oublié ?"
+msgstr "Forgot password?"
+
+#: .\base\templates\Authentification\login.html:60
+msgid "Se connecter"
+msgstr "Log in"
+
+#: .\base\templates\Authentification\login.html:129
+msgid "Nous Contacter !"
+msgstr ""
+
+#: .\base\templates\layout\header\navbar.html:234
+msgid "Langues"
+msgstr ""
+
+#: .\incident\forms.py:15
+msgid "Titre de l'incident"
+msgstr ""
+
+#: .\incident\forms.py:21
+msgid "Lieu (saisie manuelle)"
+msgstr ""
+
+#: .\incident\forms.py:28
+msgid "Est-ce que l’incident a manqué de blesser une personne ? "
+msgstr ""
+
+#: .\incident\forms.py:37
+msgid "Quelle est la cause principale de l’incident ? "
+msgstr ""
+
+#: .\incident\forms.py:43 .\incident\forms.py:56
+msgid "Quelle en serait la conséquence ? "
+msgstr ""
+
+#: .\incident\forms.py:49
+msgid "Quelle est la solution à votre avis ? "
+msgstr ""
+
+#: .\incident\forms.py:62
+msgid "Quelle est la solution à votre avis ?"
+msgstr ""
+
+#: .\incident\forms.py:68
+msgid "Action de correction immédiate ?"
+msgstr "Immediate corrective action?"
+
+#: .\incident\forms.py:77
+msgid "Photo de la correction"
+msgstr ""
+
+#: .\incident\forms.py:83
+msgid "Commentaire sur la correction"
+msgstr ""
+
+# Formulaire d'incident
+#: .\incident\templates\incident\incident_create.html:167
+msgid "Déclaration d'incident"
+msgstr "Incident Report"
+
+#: .\incident\templates\incident\incident_create.html:178
+msgid "1. Informations de base"
+msgstr "1. Basic Information"
+
+#: .\incident\templates\incident\incident_create.html:215
+#, fuzzy
+#| msgid "3. Questions spécifiques PA"
+msgid "2. Questions spécifiques PA"
+msgstr "3. Specific NM Questions"
+
+#: .\incident\templates\incident\incident_create.html:256
+#, fuzzy
+#| msgid "3. Questions spécifiques OSE"
+msgid "2. Questions spécifiques OSE"
+msgstr "3. Specific SE Questions"
+
+#: .\incident\templates\incident\incident_create.html:279
+msgid "Oui"
+msgstr "Yes"
+
+#: .\incident\templates\incident\incident_create.html:280
+msgid "Non"
+msgstr "No"
+
+#: .\incident\templates\incident\incident_create.html:309
+#, fuzzy
+#| msgid "2. Localisation"
+msgid "3. Localisation"
+msgstr "2. Location"
+
+#: .\incident\templates\incident\incident_create.html:351
+msgid "4. Documentation"
+msgstr "4. Documentation"
+
+#: .\incident\templates\incident\incident_create.html:383
+msgid "Annuler"
+msgstr "Cancel"
+
+#: .\incident\templates\incident\incident_create.html:386
+msgid "Soumettre la déclaration"
+msgstr "Submit report"
+
+#: .\worksafety2\settings.py:128
+msgid "French"
+msgstr "French"
+
+#: .\worksafety2\settings.py:129
+msgid "English"
+msgstr "English"
+
+#: .\worksafety2\settings.py:130
+msgid "Arabic"
+msgstr "Arabic"
+
+#~ msgid "Donnez un titre clair et descriptif à votre incident"
+#~ msgstr "Give a clear and descriptive title to your incident"
+
+#~ msgid ""
+#~ "Sélectionnez le type d'incident (Presque-Accident ou Observation Sécurité/"
+#~ "Environnement)"
+#~ msgstr ""
+#~ "Select the incident type (Near-Miss or Safety/Environment Observation)"
+
+#~ msgid "Décrivez l'incident de manière détaillée (quoi, comment...)"
+#~ msgstr "Describe the incident in detail (what, how...)"
+
+#~ msgid "Sélectionnez d'abord un site pour voir les emplacements disponibles"
+#~ msgstr "First select a site to see available locations"
+
+#~ msgid "Précisez le lieu exact si nécessaire (bâtiment, étage, zone...)"
+#~ msgstr "Specify exact location if needed (building, floor, area...)"
+
+#~ msgid "Glissez-déposez une photo ou cliquez pour sélectionner"
+#~ msgstr "Drag and drop a photo or click to select"
+
+#~ msgid "Ajoutez tout commentaire supplémentaire utile"
+#~ msgstr "Add any additional useful comments"
+
+#~ msgid "Résumé & Checklist"
+#~ msgstr "Summary & Checklist"
+
+#~ msgid "Progression"
+#~ msgstr "Progress"
+
+#~ msgid "Sections à compléter"
+#~ msgstr "Sections to complete"
+
+#~ msgid "Vérification finale"
+#~ msgstr "Final verification"
+
+#~ msgid "Tous les champs requis sont remplis"
+#~ msgstr "All required fields are completed"
+
+#~ msgid "Les photos sont claires et lisibles"
+#~ msgstr "Photos are clear and readable"
+
+#~ msgid "La description est complète et précise"
+#~ msgstr "Description is complete and accurate"

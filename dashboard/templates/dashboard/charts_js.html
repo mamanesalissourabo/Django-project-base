@@ -1,0 +1,103 @@
+<!-- Scripts JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de l'affichage du classement
+    const showLeaderboardButton = document.getElementById('showLeaderboardButton');
+    if (showLeaderboardButton) {
+        showLeaderboardButton.addEventListener('click', function() {
+            const leaderboardSection = document.getElementById('leaderboardSection');
+            if (leaderboardSection.style.display === 'none') {
+                leaderboardSection.style.display = 'block';
+                this.textContent = 'Masquer le classement';
+            } else {
+                leaderboardSection.style.display = 'none';
+                this.textContent = 'Voir le classement';
+            }
+        });
+    }
+    const toggleLeaderboardBtn = document.getElementById('toggleLeaderboardBtn');
+    const leaderboardSection = document.getElementById('leaderboardSection');
+
+    if (toggleLeaderboardBtn && leaderboardSection) {
+        // Masquer par défaut (au cas où)
+        leaderboardSection.style.display = 'none';
+        
+        toggleLeaderboardBtn.addEventListener('click', function() {
+            if (leaderboardSection.style.display === 'none') {
+                leaderboardSection.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-trophy me-1"></i>Masquer le classement';
+            } else {
+                leaderboardSection.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-trophy me-1"></i>Afficher le classement';
+            }
+        });
+    }
+    // Graphique principal
+    new Chart(document.getElementById('incidentsChart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['En attente', 'En cours', 'Résolu'],
+            datasets: [{
+                data: [
+                    {{ status_count.pending }},
+                    {{ status_count.ongoing }},
+                    {{ status_count.resolved }}
+                ],
+                backgroundColor: ['#F64E60', '#6993FF', '#1BC5BD'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '75%',
+            plugins: { legend: { display: false }, tooltip: { enabled: true } }
+        }
+    });
+
+    {% if dashboard_type == 'superuser' %}
+    // Graphique d'évolution
+    new Chart(document.getElementById('incidentsTrendChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: {{ dates|safe }},
+            datasets: [
+                { label: 'Incidents Resolus', data: {{ resolved_data|safe }}, borderColor: '#00FF00', fill: false },
+                { label: 'Incidents en Cours', data: {{ ongoing_data|safe }}, borderColor: '#4d8bff', fill: false },
+                { label: 'Incidents Déclarés', data: {{ declared_data|safe }}, borderColor: '#F64E60', fill: false }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true, position: 'top' } },
+            scales: {
+                x: { title: { display: true, text: 'Date' } },
+                y: { title: { display: true, text: "Nombre d'incidents" }, beginAtZero: true }
+            }
+        }
+    });
+    {% endif %}
+
+    {% if dashboard_type == 'helpdesk' %}
+    // Graphique par criticité
+    new Chart(document.getElementById('criticityChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: {{ criticities|safe }},
+            datasets: [{
+                data: {{ totals|safe }},
+                backgroundColor: ['#dc3545', '#4d8bff', '#ffc107'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: "Nombre d'incidents" } },
+                x: { title: { display: true, text: 'Priorité' } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+    {% endif %}
+});
+</script>

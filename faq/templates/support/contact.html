@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+<!--begin::Toolbar-->
+{% block toolbar %}
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Contact {% endblock %} </li>
+					<!--end::Item-->
+				</ul>
+				<!--end::Breadcrumb-->
+		
+			</div>
+			<!--end::Toolbar container-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+{% endblock toolbar %}
+<!--end::Toolbar-->
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="card">
+    
+    <h3 class="card-title p-10" style="margin-bottom: -25px;">Contactez le support</h3>
+    <div class="card-body">
+        <div class="separator separator-dashed mb-10"></div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Prénom</label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nom</label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label">Objet</label>
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label">Message</label>
+                {{ form.message }}
+                {{ form.message.errors }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="ki-duotone ki-paper-plane fs-2 me-2"></i>
+                Envoyer la demande
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

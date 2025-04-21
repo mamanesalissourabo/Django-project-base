@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-12 11:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\base\forms.py:12 .\base\forms.py:15
+msgid "Nom d'utilisateur"
+msgstr "Nom d'utilisateur"
+
+#: .\base\forms.py:19 .\base\forms.py:22
+msgid "Mot de passe"
+msgstr "Mot de passe"
+
+#: .\base\templates\Authentification\login.html:25
+msgid "Safetyfirst"
+msgstr ""
+
+#: .\base\templates\Authentification\login.html:26
+msgid "Veuillez vous connecter à votre compte et commencer l'aventure"
+msgstr "Veuillez vous connecter à votre compte et commencer l'aventure"
+
+#: .\base\templates\Authentification\login.html:51
+msgid "Mot de passe oublié ?"
+msgstr "Mot de passe oublié ?"
+
+#: .\base\templates\Authentification\login.html:60
+msgid "Se connecter"
+msgstr "Se connecter"
+
+#: .\base\templates\Authentification\login.html:129
+msgid "Nous Contacter !"
+msgstr ""
+
+#: .\base\templates\layout\header\navbar.html:234
+msgid "Langues"
+msgstr ""
+
+#: .\incident\forms.py:15
+msgid "Type de l'évènement"
+msgstr ""
+
+#: .\incident\forms.py:21
+msgid "Lieu (saisie manuelle)"
+msgstr ""
+
+#: .\incident\forms.py:28
+msgid "Est-ce que l’incident a manqué de blesser une personne ? "
+msgstr ""
+
+#: .\incident\forms.py:37
+msgid "Quelle est la cause principale de l’incident ? "
+msgstr ""
+
+#: .\incident\forms.py:43 .\incident\forms.py:56
+msgid "Quelle en serait la conséquence ? "
+msgstr ""
+
+#: .\incident\forms.py:49
+msgid "Quelle est la solution à votre avis ? "
+msgstr ""
+
+#: .\incident\forms.py:62
+msgid "Quelle est la solution à votre avis ?"
+msgstr ""
+
+#: .\incident\forms.py:68
+msgid "Action de correction immédiate ?"
+msgstr ""
+
+#: .\incident\forms.py:77
+msgid "Photo de la correction"
+msgstr ""
+
+#: .\incident\forms.py:83
+msgid "Commentaire sur la correction"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:167
+msgid "Déclaration d'incident"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:178
+msgid "1. Informations de base"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:187
+msgid "Donnez un titre clair et descriptif à votre incident"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:193
+msgid ""
+"Sélectionnez le type d'incident (Presque-Accident ou Observation Sécurité/"
+"Environnement)"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:204
+msgid "Décrivez l'incident de manière détaillée (quoi, comment...)"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:215
+msgid "2. Questions spécifiques Presque-Accident"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:256
+msgid "2. Questions spécifiques Observation Sécurité/Environnement"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:279
+msgid "Oui"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:280
+msgid "Non"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:309
+msgid "3. Localisation"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:325
+msgid "Sélectionnez d'abord un site pour voir les emplacements disponibles"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:336
+msgid "Précisez le lieu exact si nécessaire (bâtiment, étage, zone...)"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:351
+#: .\incident\templates\incident\incident_create.html:459
+msgid "4. Documentation"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:367
+msgid "Glissez-déposez une photo ou cliquez pour sélectionner"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:375
+msgid "Ajoutez tout commentaire supplémentaire utile"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:383
+msgid "Annuler"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:386
+msgid "Soumettre la déclaration"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:399
+msgid "Résumé & Checklist"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:401
+msgid "Progression"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:418
+msgid "Sections à compléter"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:427
+#: .\incident\templates\incident\incident_create.html:439
+#: .\incident\templates\incident\incident_create.html:451
+#: .\incident\templates\incident\incident_create.html:463
+msgid "champs requis"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:435
+msgid "2. Localisation"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:447
+msgid "3. Questions spécifiques"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:470
+msgid "Vérification finale"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:474
+msgid "Tous les champs requis sont remplis"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:478
+msgid "Les photos sont claires et lisibles"
+msgstr ""
+
+#: .\incident\templates\incident\incident_create.html:482
+msgid "La description est complète et précise"
+msgstr ""
+
+#: .\worksafety2\settings.py:128
+msgid "French"
+msgstr ""
+
+#: .\worksafety2\settings.py:129
+msgid "English"
+msgstr ""
+
+#: .\worksafety2\settings.py:130
+msgid "Arabic"
+msgstr ""

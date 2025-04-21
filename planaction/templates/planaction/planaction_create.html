@@ -1,0 +1,150 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+<!--begin::Toolbar-->
+{% block toolbar %}
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Actions {% endblock %} </li>
+					<!--end::Item-->
+                    <!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">Création</li>
+					<!--end::Item-->
+				</ul>
+				<!--end::Breadcrumb-->
+			</div>
+			<!--end::Toolbar container-->
+             <!--begin::Actions-->
+			<div class="d-flex align-items-center gap-3">
+				<!--begin::Secondary button-->
+				<div class="m-0">
+					<!--begin::Menu-->
+					<a href="{% url 'planaction-list' %}" class="btn btn-sm fw-bold btn-secondary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Historique des actions</a>
+					<!--end::Menu-->
+				</div>
+				<!--end::Secondary button-->
+				{% if dashboard_type == 'superuser' %}
+				<button id="toggleLeaderboardBtn" class="btn btn-sm btn-primary">
+					<i class="fas fa-trophy me-1"></i>
+					<span class="toggle-text">Afficher Classement</span>
+				</button>
+			{% endif %}
+			</div>
+			<!--end::Actions-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+{% endblock toolbar %}
+<!--end::Toolbar-->
+
+{% block content %}
+
+<div class="content flex-row-fluid" id="kt_content">
+    <!--begin::Card-->
+    <div class="card shadow-sm">
+        <!--begin::Card Header-->
+        <div class="card-header bg-light text-white text-center">
+            <h3 class="card-title fw-bold mb-0">Créer une nouvelle action</h3>
+        </div>
+        <!--end::Card Header-->
+
+        <!--begin::Card Body-->
+        <div class="card-body">
+
+            <!--begin::Form-->
+            <form method="post" class="form mb-0" id="kt_plan_action_form">
+                {% csrf_token %}
+                
+                <div class="row">
+
+                    <!-- Colonne de gauche -->
+                    <div class="col-md-6">
+                        <!-- Titre -->
+                        <div class="d-flex flex-column mb-4 fv-row">
+                            <label class="fs-5 fw-semibold mb-2">{{ form.title.label }}</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="text-danger mt-2">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Description -->
+                        <div class="d-flex flex-column mb-4 fv-row">
+                            <label class="fs-5 fw-semibold mb-2">{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger mt-2">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Colonne de droite -->
+                    <div class="col-md-6">
+                        <!-- Responsable -->
+                        <div class="d-flex flex-column mb-4 fv-row">
+                            <label class="fs-5 fw-semibold mb-2">{{ form.created_by_user.label }}</label>
+                            {{ form.created_by_user }}
+                            {% if form.created_by_user.errors %}
+                                <div class="text-danger mt-2">{{ form.created_by_user.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Incident associé -->
+                        <div class="d-flex flex-column mb-4 fv-row">
+                            <label class="fs-5 fw-semibold mb-2">{{ form.incident.label }}</label>
+                            {{ form.incident }}
+                            {% if form.incident.errors %}
+                                <div class="text-danger mt-2">{{ form.incident.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Separator-->
+                <div class="separator my-4"></div>
+                <!--end::Separator-->
+
+                <!--begin::Action buttons-->
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-light me-3" href="{% url 'planaction-list' %}">Annuler</a>
+                    <button type="submit" class="btn" style="background-color: #ffcf01; color: #000;">Enregistrer l'action</button>
+                </div>
+                <!--end::Action buttons-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Card Body-->
+    </div>
+    <!--end::Card-->
+</div>
+
+{% endblock %}

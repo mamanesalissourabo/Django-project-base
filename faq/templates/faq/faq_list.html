@@ -1,0 +1,135 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+<!--begin::Toolbar-->
+{% block toolbar %}
+<div id="kt_app_toolbar" class="app-toolbar pt-4 pt-lg-7 mb-n1 mb-lg-n3">
+	<!--begin::Toolbar container-->
+	<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-row-fluid">
+		<!--begin::Toolbar container-->
+		<div class="d-flex flex-stack flex-row-fluid">
+			
+			<!--begin::Toolbar container-->
+			<div class="d-flex flex-column flex-row-fluid">
+				<!--begin::Toolbar wrapper-->
+				<!--begin::Breadcrumb-->
+				<ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-1 mb-lg-3 me-2 fs-7">
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+						<a href="{% url 'accueil' %}" class="text-white text-hover-primary">
+							<i class="ki-outline ki-home text-gray-700 fs-6"></i>
+						</a>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item">
+						<i class="ki-outline ki-right fs-7 text-gray-700 mx-n1"></i>
+					</li>
+					<!--end::Item-->
+					<!--begin::Item-->
+					<li class="breadcrumb-item text-gray-700 fw-bold lh-1"> {% block toolbar_menu %} Faq {% endblock %} </li>
+					<!--end::Item-->
+				</ul>
+				<!--end::Breadcrumb-->
+				</div>
+				<!--end::Page title-->
+			</div>
+			<!--end::Toolbar container-->
+		</div>
+		<!--end::Toolbar container-->
+	</div>
+	<!--end::Toolbar container-->
+</div>
+{% endblock toolbar %}
+<!--end::Toolbar-->
+
+{% block content %}
+
+<div class="content flex-row-fluid" id="kt_content">
+    <!--begin::FAQ card-->
+    <div class="card">
+        <!--begin::Body-->
+        <div class="card-body p-lg-15">
+            <!--begin::Classic content-->
+            <div class="mb-13">
+                <!--begin::Intro-->
+                <div class="mb-15">
+                    <!--begin::Title-->
+                    <h4 class="fs-2x text-gray-800 w-bolder mb-6">Foire Aux Questions (FAQ)</h4>
+                    <!--end::Title-->
+                    <!--begin::Text-->
+                    <p class="fw-semibold fs-4 text-gray-600 mb-2">Vous trouverez ici les réponses aux questions les plus fréquemment posées.</p>
+                    <!--end::Text-->
+                </div>
+                <!--end::Intro-->
+                <!--begin::Row-->
+                <div class="row mb-12">
+                    <!-- Dynamically display categories in two columns -->
+                    {% for category in categories %}
+                        <!--begin::Col-->
+                        <div class="col-md-6 pe-md-10 mb-10 mb-md-0">
+                            <!--begin::Title-->
+                            <h2 class="text-gray-800 fw-bold mb-4">{{ category.name }}</h2>
+                            <!--end::Title-->
+                            <!--begin::Accordion-->
+                            {% for faq in faqs %}
+                                {% if faq.category == category %}
+                                <!--begin::Section-->
+                                <div class="m-0">
+                                    <!--begin::Heading-->
+                                    <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#kt_faq_{{ faq.id }}">
+                                        <!--begin::Icon-->
+                                        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                            <i class="ki-duotone ki-plus-square toggle-off fs-1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
+                                            <i class="ki-duotone ki-minus-square toggle-on text-primary fs-1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </div>
+                                        <!--end::Icon-->
+                                        <!--begin::Title-->
+                                        <h4 class="text-gray-700 fw-bold cursor-pointer mb-0">{{ faq.question }}</h4>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::Heading-->
+                                    <!--begin::Body-->
+                                    <div id="kt_faq_{{ faq.id }}" class="collapse fs-6 ms-1">
+                                        <!--begin::Text-->
+                                        <div class="mb-4 text-gray-600 fw-semibold fs-6 ps-10">
+                                            {{ faq.answer }}
+                                        </div>
+                                        <!--end::Text-->
+                                    </div>
+                                    <!--end::Content-->
+                                    <!--begin::Separator-->
+                                    <div class="separator separator-dashed"></div>
+                                    <!--end::Separator-->
+                                </div>
+                                <!--end::Section-->
+                                {% endif %}
+                            {% endfor %}
+                            <!--end::Accordion-->
+                        </div>
+                        <!--end::Col-->
+                        <!-- Alternate columns for better layout -->
+                        {% if forloop.counter|divisibleby:2 %}
+                            </div><div class="row mb-12">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Classic content-->
+        </div>
+        <!--end::Body-->
+    </div>
+    <!--end::FAQ card-->
+</div>
+    
+{% endblock %}
+

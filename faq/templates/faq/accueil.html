@@ -1,0 +1,457 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block toolbar %}
+
+{% endblock toolbar %}
+
+<div class="content flex-row-fluid" id="kt_content">
+    <!-- Hero Section - Charte Graphique HSE -->
+    <div class="card mb-5" style="background: linear-gradient(135deg, #132048 0%, #132048 100%);">
+        <div class="card-body p-10">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="text-white mb-4" style="font-weight: 700; font-size: 2.5rem;">Sécurité d'abord, toujours</h1>
+                    <p class="text-white opacity-75 fs-4 mb-6">
+                        Notre engagement pour un environnement de travail sûr et sain pour tous.
+                    </p>
+                    <div class="d-flex flex-wrap">
+                        <span class="badge badge-warning text-black fs-6 fw-bold me-2 mb-2 px-4 py-2">
+                            <i class="bi bi-shield-check text-black me-2"></i> Prévention
+                        </span>
+                        <span class="badge badge-warning text-black fs-6 fw-bold me-2 mb-2 px-4 py-2">
+                            <i class="bi bi-people-fill text-black me-2"></i> Responsabilité collective
+                        </span>
+                        <span class="badge badge-warning text-black fs-6 fw-bold mb-2 px-4 py-2">
+                            <i class="bi bi-graph-up text-black me-2"></i> Amélioration continue
+                        </span>
+                    </div>
+
+                   
+                </div>
+
+                <!-- Carte supplémentaire à droite -->
+                <div class="col-lg-6 mt-lg-0 mt-10">
+                    <div class="card card-flush h-md-100 bg-white bg-opacity-10">
+                        <div class="card-header bg-transparent">
+                            <h3 class="card-title text-white fw-bold">Votre vigilance compte</h3>
+                        </div>
+                        <div class="card-body pt-1">
+                            <a href="{% url 'incident_create' %}" class="btn" style="background-color: #ffcf01; color: #000; font-weight: bold; padding: 0.75rem 1.5rem;">
+                                <i class="fas fa-exclamation-triangle me-3"></i>Déclarer un incident
+                            </a>
+
+                            <p class="text-white-50 fs-6 mt-4" style="margin-bottom: -1px;">
+                                <i class="fas fa-info-circle"></i>Toute déclaration contribue à améliorer la sécurité de tous
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Section - 0 Accident -->
+    <div class="row mb-10">
+        <div class="col-xxl-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold fs-3 mb-1">Objectif Zéro Accident</span>
+                        <span class="text-muted mt-1 fw-semibold fs-6">Notre engagement quotidien</span>
+                    </h3>
+                </div>
+                <div class="card-body p-0">
+                    <div style="width: 100%; height: 0; padding-bottom: 56.25%; position: relative; overflow: hidden; border-radius: 8px;">
+                        <!-- Cover Image -->
+                        <div id="video-cover" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('{% static '/assets/media/svg/illustrations/easy/zero-accident-1.jpg' %}'); background-size: cover; background-position: center; cursor: pointer;">
+                            <!-- Play Button -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <button id="play-button" 
+                                 style="background-color: rgba(255, 207, 1, 0.8); color: #000; border: none; border-radius: 50%; width: 80px; height: 80px; font-size: 32px; cursor: pointer; transition: all 0.3s ease;">
+                                    ▶
+                                </button>
+                            </div>
+                            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; text-align: center;">
+                                <span class="badge" style="background-color: #ffcf01; color: #000; font-size: 1rem; font-weight: bold; padding: 0.5rem 1rem;">VIDÉO DE SENSIBILISATION</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Video iframe (hidden by default) -->
+                        <iframe 
+                            id="video-iframe" 
+                            src="https://www.youtube.com/embed/Ec0OJPuxtDg?autoplay=1&mute=1&loop=1&playlist=Ec0OJPuxtDg" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none;" 
+                            allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button id="replay-button" class="btn" style="background-color: #ffcf01; color: #000; font-weight: bold; display: none;">
+                        <i class="bi bi-arrow-repeat me-2"></i>Revoir la vidéo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rappel des définitions et objectifs HSE -->
+    <div class="card mb-10">
+        <div class="card-body p-lg-15">
+            <div class="mb-13">
+                <div class="mb-15 text-center">
+                    <h2 class="fs-2x text-gray-800 fw-bolder mb-6">Notre Politique HSE</h2>
+                    <div class="separator separator-dashed border-primary opacity-25 mb-8 mx-auto" style="width: 100px;"></div>
+                    <p class="fw-semibold fs-4 text-gray-600 mb-2">
+                        La politique Hygiène, Sécurité et Environnement (HSE) constitue un engagement fort de notre direction et de l'ensemble des collaborateurs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-10 mb-10">
+                <!-- Définitions -->
+                <div class="col-lg-6">
+                    <div class="card bg-light shadow-sm h-100">
+                        <div class="card-header bg-transparent">
+                            <h3 class="card-title text-gray-800 fw-bold">Définitions Clés</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion accordion-icon-toggle" id="definitions-accordion">
+                                <div class="accordion-item mb-4">
+                                    <div class="accordion-header">
+                                        <button class="accordion-button fs-4 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#definition-hse">
+                                            Qu'est-ce que la HSE ?
+                                        </button>
+                                    </div>
+                                    <div id="definition-hse" class="accordion-collapse collapse show">
+                                        <div class="accordion-body text-gray-600">
+                                            La HSE (Hygiène, Sécurité, Environnement) regroupe les méthodes et moyens techniques, organisationnels et humains visant à prévenir les risques professionnels et environnementaux.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item mb-4">
+                                    <div class="accordion-header">
+                                        <button class="accordion-button collapsed fs-4 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#definition-accident">
+                                            Accident du travail
+                                        </button>
+                                    </div>
+                                    <div id="definition-accident" class="accordion-collapse collapse">
+                                        <div class="accordion-body text-gray-600">
+                                            Tout événement soudain et imprévu survenu pendant et du fait du travail, entraînant une lésion corporelle ou psychologique.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <button class="accordion-button collapsed fs-4 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#definition-risque">
+                                            Risque professionnel
+                                        </button>
+                                    </div>
+                                    <div id="definition-risque" class="accordion-collapse collapse">
+                                        <div class="accordion-body text-gray-600">
+                                            Éventualité d'un événement pouvant provoquer un dommage pour la santé des travailleurs ou des tiers, ou des atteintes à l'environnement.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objectifs -->
+                <div class="col-lg-6">
+                    <div class="card bg-light shadow-sm h-100">
+                        <div class="card-header bg-transparent">
+                            <h3 class="card-title text-gray-800 fw-bold">Nos Objectifs HSE</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex align-items-center mb-6">
+                                    <span class="bullet bullet-vertical bg-primary me-5 h-50px"></span>
+                                    <div class="flex-grow-1">
+                                        <span class="text-gray-800 fw-bold fs-5">Zéro accident</span>
+                                        <span class="text-gray-600 d-block fs-6">Éliminer tous les accidents du travail et maladies professionnelles</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-6">
+                                    <span class="bullet bullet-vertical bg-success me-5 h-50px"></span>
+                                    <div class="flex-grow-1">
+                                        <span class="text-gray-800 fw-bold fs-5">Conformité</span>
+                                        <span class="text-gray-600 d-block fs-6">Respecter et dépasser les exigences réglementaires</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-6">
+                                    <span class="bullet bullet-vertical bg-warning me-5 h-50px"></span>
+                                    <div class="flex-grow-1">
+                                        <span class="text-gray-800 fw-bold fs-5">Formation</span>
+                                        <span class="text-gray-600 d-block fs-6">100% des collaborateurs formés aux bonnes pratiques HSE</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="bullet bullet-vertical bg-info me-5 h-50px"></span>
+                                    <div class="flex-grow-1">
+                                        <span class="text-gray-800 fw-bold fs-5">Amélioration continue</span>
+                                        <span class="text-gray-600 d-block fs-6">Réduire chaque année nos indicateurs de risque</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicateurs -->
+            <div class="card bg-light-primary shadow-sm">
+                <div class="card-body p-10">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <span class="text-primary fs-2hx fw-bold d-block">365</span>
+                            <span class="text-gray-600 fs-5">Jours sans accident</span>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary fs-2hx fw-bold d-block">98%</span>
+                            <span class="text-gray-600 fs-5">Formations HSE réalisées</span>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary fs-2hx fw-bold d-block">42</span>
+                            <span class="text-gray-600 fs-5">Actions préventives</span>
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-primary fs-2hx fw-bold d-block">100%</span>
+                            <span class="text-gray-600 fs-5">Audits conformes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outils pratiques -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label fw-bold fs-3 mb-1">Outils et Ressources</span>
+                <span class="text-muted mt-1 fw-semibold fs-6">Pour votre sécurité au quotidien</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row g-10">
+                <div class="col-md-4">
+                    <div class="card card-flush h-md-100">
+                        <div class="card-header">
+                            <h3 class="card-title text-gray-800 fw-bold">Déclarer un incident</h3>
+                        </div>
+                        <div class="card-body pt-1">
+                            <p class="text-gray-600 fs-6 mb-6">Signalez rapidement tout incident ou situation dangereuse.</p>
+                            <a href="{% url 'incident_create' %}" class="btn fw-bold" style="background-color: #ffcf01; color: #000;">Accéder au formulaire</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card card-flush h-md-100">
+                        <div class="card-header">
+                            <h3 class="card-title text-gray-800 fw-bold">Documentation HSE</h3>
+                        </div>
+                        <div class="card-body pt-1">
+                            <p class="text-gray-600 fs-6 mb-6">Accédez à l'ensemble des documents et procédures.</p>
+                            <a href="#" class="btn" style="background-color: #ffcf01; color: #000;">Consulter</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-flush h-md-100">
+                        <div class="card-header">
+                            <h3 class="card-title text-gray-800 fw-bold">Support HSE</h3>
+                        </div>
+                        <div class="card-body pt-1">
+                            <div class="d-flex flex-column h-100">
+                                <p class="text-gray-600 fs-6 mb-6">Un problème ? Une question ? Notre équipe vous répond sous 24h.</p>
+                                <div class="mt-auto">
+                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#supportModal" style="background-color: #ffcf01; color: #000;">
+                                        Contacter le support
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bouton flottant -->
+<div class="position-fixed bottom-0 end-0 mb-10 me-10">
+    <a href="{% url 'contact_support' %}" 
+       class="btn btn-danger btn-icon btn-lg rounded-circle shadow-lg pulse-animation"
+       data-bs-toggle="tooltip" 
+       data-bs-placement="left" 
+       title="Support HSE - Cliquez pour assistance">
+        <i class="bi bi-headset fs-2hx"></i>
+    </a>
+</div>
+
+<script>
+    // Gestion de la vidéo
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoCover = document.getElementById('video-cover');
+        const videoIframe = document.getElementById('video-iframe');
+        const playButton = document.getElementById('play-button');
+        const replayButton = document.getElementById('replay-button');
+
+        if (videoCover && videoIframe) {
+            videoCover.addEventListener('click', function() {
+                videoCover.style.display = 'none';
+                videoIframe.style.display = 'block';
+                replayButton.style.display = 'block';
+            });
+
+            replayButton.addEventListener('click', function() {
+                videoIframe.src += '&autoplay=1'; // Recharge la vidéo avec autoplay
+                videoCover.style.display = 'none';
+                videoIframe.style.display = 'block';
+            });
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const supportForm = document.getElementById('supportForm');
+        
+        if (supportForm) {
+            supportForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitButton = this.querySelector('button[type="submit"]');
+                const indicatorLabel = submitButton.querySelector('.indicator-label');
+                const indicatorProgress = submitButton.querySelector('.indicator-progress');
+                
+                // Show loading state
+                indicatorLabel.style.display = 'none';
+                indicatorProgress.style.display = 'inline-block';
+                
+                // Submit form via AJAX
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Demande envoyée!',
+                            text: 'Notre équipe vous répondra dans les plus brefs délais.',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Redirection vers l'accueil
+                            window.location.href = data.redirect_url;
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: data.error || 'Une erreur est survenue',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: 'Une erreur réseau est survenue',
+                        confirmButtonText: 'OK'
+                    });
+                })
+                .finally(() => {
+                    // Reset button state
+                    indicatorLabel.style.display = 'inline-block';
+                    indicatorProgress.style.display = 'none';
+                });
+            });
+        }
+    });
+</script>
+
+<!-- Modal Support -->
+<div class="modal fade" id="supportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h2 class="modal-title fs-3 fw-bold">Contactez le support HSE</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Body -->
+            <div class="modal-body p-7">
+                <form id="supportForm" method="post" action="{% url 'contact_support' %}">
+                    {% csrf_token %}
+                    
+                    <div class="row mb-6">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <label class="form-label fs-6 fw-semibold required">Prénom</label>
+                            {{ form.first_name }}
+                            <div class="text-danger mt-2">{{ form.first_name.errors }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fs-6 fw-semibold required">Nom</label>
+                            {{ form.last_name }}
+                            <div class="text-danger mt-2">{{ form.last_name.errors }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="form-label fs-6 fw-semibold required">Email</label>
+                        {{ form.email }}
+                        <div class="text-danger mt-2">{{ form.email.errors }}</div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="form-label fs-6 fw-semibold required">Objet</label>
+                        {{ form.title }}
+                        <div class="text-danger mt-2">{{ form.title.errors }}</div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <label class="form-label fs-6 fw-semibold required">Message</label>
+                        {{ form.message }}
+                        <div class="text-danger mt-2">{{ form.message.errors }}</div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="modal-footer px-0 pb-0">
+                        <button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="indicator-label">
+                                <i class="bi bi-send-fill me-2"></i>Envoyer la demande
+                            </span>
+                            <span class="indicator-progress">
+                                Envoi en cours... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
